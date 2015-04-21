@@ -10,11 +10,11 @@ var categories = [
 		type : "Clothing"
 	},
 	{
-		id : 3
+		id : 3,
 		type : "Applicances"
 	},
 	{
-		id : 4
+		id : 4,
 		type : "Automobiles"
 	}
 ];
@@ -106,8 +106,8 @@ var automobileProducts = [
 var Mobile_Apple = ['iPhone1', 'iPhone2','iPhone3','iPhone4','iPhone5','iPhone6','iPhone7','iPhone8','iPhone9','iPhone10'];
 var Mobile_Samsung = ['Galaxy1', 'Galaxy2', 'Galaxy3', 'Galaxy4', 'Galaxy5', 'Galaxy6', 'Galaxy7', 'Galaxy8', 'Galaxy9', 'Galaxy10'];
 var Mobile_Micromax = ['MicroG1', 'MicroG2', 'MicroG3', 'MicroG4', 'MicroG5', 'MicroG6', 'MicroG7', 'MicroG8', 'MicroG9', 'MicroG10'];
-var Xiome_Mobiles = ['XiomX1', 'XiomX2', 'XiomX3', 'XiomX4', 'XiomX5', 'XiomX6', 'XiomX7', 'XiomX8', 'XiomX9', 'XiomX10'];
-var Nokia_Mobiles = ['Lumia1', 'Lumia2', 'Lumia3', 'Lumia4', 'Lumia5', 'Lumia6', 'Lumia7', 'Lumia8', 'Lumia9', 'Lumia10'];
+var Mobile_Xiome = ['XiomX1', 'XiomX2', 'XiomX3', 'XiomX4', 'XiomX5', 'XiomX6', 'XiomX7', 'XiomX8', 'XiomX9', 'XiomX10'];
+var Mobile_Nokia = ['Lumia1', 'Lumia2', 'Lumia3', 'Lumia4', 'Lumia5', 'Lumia6', 'Lumia7', 'Lumia8', 'Lumia9', 'Lumia10'];
 var Tablet_Apple = ['iPad1', 'iPad2', 'iPad3', 'iPad4', 'iPad5', 'iPad6', 'iPad7', 'iPad8', 'iPad9', 'iPad10'];
 var Tablet_Samsung = ['Note1', 'Note2', 'Note3', 'Note4', 'Note5', 'Note6', 'Note7', 'Note8', 'Note9', 'Note10'];
 var Tablet_HP = ['HPTab1', 'HPTab2', 'HPTab3', 'HPTab4', 'HPTab5', 'HPTab6', 'HPTab7', 'HPTab8', 'HPTab9', 'HPTab10'];
@@ -138,8 +138,8 @@ var Jeans_Pepe = ['Pepe1', 'Pepe2', 'Pepe3', 'Pepe4', 'Pepe5', 'Pepe6', 'Pepe7',
 var Refrige_Godrej = ['Godrej1', 'Godrej2', 'Godrej3', 'Godrej4', 'Godrej5', 'Godrej6', 'Godrej7', 'Godrej8', 'Godrej9', 'Godrej10'];
 var Refrige_Voltas = ['Voltas1', 'Voltas2','Voltas3','Voltas4','Voltas5','Voltas6','Voltas7','Voltas8','Voltas9','Voltas10'];
 var Refrige_Alwyn = ['Alwyn1', 'Alwyn2','Alwyn3','Alwyn4','Alwyn5','Alwyn6','Alwyn7','Alwyn8','Alwyn9','Alwyn10'];
-var Refrige_GE =['GE1', 'GE1','GE2','GE3','GE4','GE5','GE6','GE7','GE8','GE9','GE10'];
-var Refrige_8idecon = ['Videocon1','Videocon2','Videocon3','Videocon4','Videocon5','Videocon6','Videocon7','Videocon8','Videocon9','Videocon10'];
+var Refrige_GE =['GE1','GE2','GE3','GE4','GE5','GE6','GE7','GE8','GE9','GE10'];
+var Refrige_Videcon = ['Videocon1','Videocon2','Videocon3','Videocon4','Videocon5','Videocon6','Videocon7','Videocon8','Videocon9','Videocon10'];
 var TV_LG = ['LGTV1', 'LGTV2', 'LGTV3', 'LGTV4', 'LGTV5', 'LGTV6', 'LGTV7', 'LGTV8', 'LGTV9', 'LGTV10'];
 var TV_Samsung = ['SGTV1', 'SGTV2', 'SGTV3', 'SGTV4', 'SGTV5', 'SGTV6', 'SGTV7', 'SGTV8', 'SGTV9', 'SGTV10'];
 var TV_Sony = ['Sony1', 'Sony2', 'Sony3', 'Sony4', 'Sony5', 'Sony6', 'Sony7', 'Sony8', 'Sony9', 'Sony10'];
@@ -172,6 +172,94 @@ var SUV_Merc = ['Merc1', 'Merc2', 'Merc3', 'Merc4', 'Merc5', 'Merc6', 'Merc7', '
 
 
 
+function createProductLine(category, productType, brandName, models){
+	var products = [];
+
+	models.forEach(function(model){
+		products.push({
+			category : category,
+			type : productType,
+			brand : brandName,
+			model: model
+		});
+	});
+
+	return products;
+}
 
 
+var allProducts = [];
 
+allProducts = allProducts.concat(createProductLine('Electronics', 'Mobile', 'Apple', Mobile_Apple));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Mobile', 'Samsung', Mobile_Samsung));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Mobile', 'Micromax', Mobile_Micromax));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Mobile', 'Xiome', Mobile_Xiome));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Mobile', 'Nokia', Mobile_Nokia));
+
+allProducts = allProducts.concat(createProductLine('Electronics', 'Tablet', 'Apple', Tablet_Apple));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Tablet', 'Samsung', Tablet_Samsung));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Tablet', 'HP', Tablet_HP));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Tablet', 'Dell', Tablet_Dell));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Tablet', 'Asus', Tablet_Asus));
+
+allProducts = allProducts.concat(createProductLine('Electronics', 'Laptop', 'Apple', Laptop_Apple));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Laptop', 'Samsung', Laptop_Samsung));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Laptop', 'Acer', Laptop_Acer));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Laptop', 'Lenovo', Laptop_Lenovo));
+allProducts = allProducts.concat(createProductLine('Electronics', 'Laptop', 'Compaq', Laptop_Compaq));
+
+allProducts = allProducts.concat(createProductLine('Clothing', 'Shirt', 'VanHusen', Shirts_VanHusen));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Shirt', 'ColorPlus', Shirts_ColorPlus));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Shirt', 'Arrow', Shirts_Arrow));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Shirt', 'PeterEngland', Shirts_PeterEngland));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Shirt', 'RalphPolo', Shirts_RalphPolo));
+
+allProducts = allProducts.concat(createProductLine('Clothing', 'TShirt', 'Nike', TShirts_Nike));
+allProducts = allProducts.concat(createProductLine('Clothing', 'TShirt', 'Addidas', TShirts_Addidas));
+allProducts = allProducts.concat(createProductLine('Clothing', 'TShirt', 'Crocodile', TShirts_Crocodile));
+allProducts = allProducts.concat(createProductLine('Clothing', 'TShirt', 'Kings', TShirts_Kings));
+allProducts = allProducts.concat(createProductLine('Clothing', 'TShirt', 'SFK', TShirts_SFK));
+
+allProducts = allProducts.concat(createProductLine('Clothing', 'Jeans', 'Levis', Jeans_Levis));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Jeans', 'Wrangler', Jeans_Wrangler));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Jeans', 'Stryker', Jeans_Stryker));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Jeans', 'Killer', Jeans_Killer));
+allProducts = allProducts.concat(createProductLine('Clothing', 'Jeans', 'Pepe', Jeans_Pepe));
+
+allProducts = allProducts.concat(createProductLine('Applicance', 'Refrigrator', 'Godrej', Refrige_Godrej));
+allProducts = allProducts.concat(createProductLine('Applicance', 'Refrigrator', 'Voltas', Refrige_Voltas));
+allProducts = allProducts.concat(createProductLine('Applicance', 'Refrigrator', 'Alwyn', Refrige_Alwyn));
+allProducts = allProducts.concat(createProductLine('Applicance', 'Refrigrator', 'GE', Refrige_GE));
+allProducts = allProducts.concat(createProductLine('Applicance', 'Refrigrator', 'Videocon', Refrige_Videcon));
+
+allProducts = allProducts.concat(createProductLine('Applicance', 'TV', 'LG', TV_LG));
+allProducts = allProducts.concat(createProductLine('Applicance', 'TV', 'Samsung', TV_Samsung));
+allProducts = allProducts.concat(createProductLine('Applicance', 'TV', 'Sony', TV_Sony));
+allProducts = allProducts.concat(createProductLine('Applicance', 'TV', 'Panasonic', TV_Panasonic));
+allProducts = allProducts.concat(createProductLine('Applicance', 'TV', 'Toshiba', TV_Toshiba));
+
+allProducts = allProducts.concat(createProductLine('Applicance', 'AC', 'Carrier', AC_Carrier));
+allProducts = allProducts.concat(createProductLine('Applicance', 'AC', 'Lyod', AC_Lyod));
+allProducts = allProducts.concat(createProductLine('Applicance', 'AC', 'BlueStar', AC_BlueStar));
+allProducts = allProducts.concat(createProductLine('Applicance', 'AC', 'Hitachi', AC_Hitachi));
+allProducts = allProducts.concat(createProductLine('Applicance', 'AC', 'Kenstar', AC_Kenstar));
+
+allProducts = allProducts.concat(createProductLine('Automobile', 'Bike', 'Bajaj', Bike_Bajaj));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Bike', 'Hero', Bike_Hero));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Bike', 'Kawasaky', Bike_Kawasaky));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Bike', 'Yamaha', Bike_Yamaha));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Bike', 'Suzuki', Bike_Suzuki));
+
+allProducts = allProducts.concat(createProductLine('Automobile', 'Car', 'Maruti', Car_Maruti));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Car', 'Hyundai', Car_Hyundai));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Car', 'Tata', Car_Tata));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Car', 'Fiat', Car_Fiat));
+allProducts = allProducts.concat(createProductLine('Automobile', 'Car', 'Skoda', Car_Skoda));
+
+allProducts = allProducts.concat(createProductLine('Automobile', 'SUV', 'Honda', SUV_Honda));
+allProducts = allProducts.concat(createProductLine('Automobile', 'SUV', 'Toyota', SUV_Toyota));
+allProducts = allProducts.concat(createProductLine('Automobile', 'SUV', 'BMW', SUV_BMW));
+allProducts = allProducts.concat(createProductLine('Automobile', 'SUV', 'Audi', SUV_Audi));
+allProducts = allProducts.concat(createProductLine('Automobile', 'SUV', 'Mercedes', SUV_Merc));
+
+module.exports = allProducts;
