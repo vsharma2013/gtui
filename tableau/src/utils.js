@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 function Utils(){
 
 }
@@ -77,5 +79,16 @@ Utils.prototype.convertObjectsToCSV = function(arr){
 	
 	return header;
 }
+
+Utils.prototype.saveCSVStringToFile = function(csvFilePath, csvAsStr){
+	fs.writeFile(csvFilePath, csvAsStr, function(err) {
+	    if(err) {
+	        return console.log(err);
+	    }
+
+	    console.log("The file was saved - " + csvFilePath);
+	}); 
+}
+
 
 module.exports = Utils;
