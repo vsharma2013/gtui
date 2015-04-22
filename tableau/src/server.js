@@ -1,44 +1,50 @@
 var utils = require('./utils');
+var customers = require('./customers');
+var products = require('./products');
+var regions = require('./regions');
+var addresses = require('./address');
 
+customers = utils.shuffleArray(customers);
+products = utils.shuffleArray(products);
+regions = utils.shuffleArray(regions);
 
 var rootDir = 'P:\\zlast2weeks\\gtui\\tableau\\';
 
+var FILE_NAME = {
+	CUSTOMER_CSV : rootDir + 'customers.csv',
+	PRODUCTS_CSV : rootDir + 'products.csv',
+	REGIONS_CSV : rootDir + 'regions.csv',
+	ADDRESS_CSV : rootDir + 'address.csv'
+}
+
+
+
 function createCustomerCsv(){
-	var customers = require('./customers');
-	customers = utils.shuffleArray(customers);
 	var custCsvStr = utils.convertObjectsToCSV(customers);
-	var custmoresCsvFilePath = rootDir + 'customers.csv';
-	utils.saveCSVStringToFile(custmoresCsvFilePath, custCsvStr);
+	utils.saveCSVStringToFile(FILE_NAME.CUSTOMER_CSV, custCsvStr);
 }
 
 function createProductsCsv(){
-	var products = require('./products');
-	products = utils.shuffleArray(products);
 	var prodCsvStr = utils.convertObjectsToCSV(products);
-	var productsCsvFilePath = rootDir + 'products.csv';
-	utils.saveCSVStringToFile(productsCsvFilePath, prodCsvStr);	
+	utils.saveCSVStringToFile(FILE_NAME.PRODUCTS_CSV, prodCsvStr);	
 	console.log('*** Total products =  ' + products.length);
 }
 
 function createRegionsCsv(){
-	var regions = require('./regions');
-	regions = utils.shuffleArray(regions);
 	var regionCsvStr = utils.convertObjectsToCSV(regions);
-	var regionsCsvFilePath = rootDir + 'regions.csv';
-	utils.saveCSVStringToFile(regionsCsvFilePath, regionCsvStr);	
+	utils.saveCSVStringToFile(FILE_NAME.REGIONS_CSV, regionCsvStr);	
 	console.log('*** Total regions =  ' + regions.length);
 }
 
 function createAdressCsv(){
-	var addresses = require('./address');
-	var addressCsvStr = utils.convertObjectsToCSV(addresses);
-	var addressCsvFilePath = rootDir + 'address.csv';
-	utils.saveCSVStringToFile(addressCsvFilePath, addressCsvStr);	
-	console.log('*** Total addresses =  ' + addresses.length);
+	var addForCustNReg = addresses.getAddressesForCustomersAndRegions(customers, regions);
+	var addressCsvStr = utils.convertObjectsToCSV(addForCustNReg);
+	utils.saveCSVStringToFile(FILE_NAME.ADDRESS_CSV, addressCsvStr);	
+	console.log('*** Total addresses =  ' + addForCustNReg.length);
 }
 
 
-// createCustomerCsv();
-// createProductsCsv();
-// createRegionsCsv();
+createCustomerCsv();
+createProductsCsv();
+createRegionsCsv();
 createAdressCsv();
