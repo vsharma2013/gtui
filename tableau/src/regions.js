@@ -1,5 +1,5 @@
 
-
+var id = 1;
 
 function createStateInRegion(regionName, stateName, cities, pincodeStart){
 	var allCities = [];
@@ -7,12 +7,14 @@ function createStateInRegion(regionName, stateName, cities, pincodeStart){
 
 	cities.forEach(function(c){
 		allCities.push({
+			id : id,
 			region : regionName,
 			state : stateName,
 			city : c,
 			pincode : p
 		});
 		p++;
+		id++;
 	});
 	return allCities;
 }

@@ -170,18 +170,20 @@ var SUV_Audi = ['Audi1', 'Audi2', 'Audi3', 'Audi4', 'Audi5', 'Audi6', 'Audi7', '
 var SUV_Merc = ['Merc1', 'Merc2', 'Merc3', 'Merc4', 'Merc5', 'Merc6', 'Merc7', 'Merc8', 'Merc9', 'Merc10'];
 
 
-
+var id = 1;
 
 function createProductLine(category, productType, brandName, models){
 	var products = [];
 
 	models.forEach(function(model){
 		products.push({
+			id : id,
 			category : category,
 			type : productType,
 			brand : brandName,
 			model: model
 		});
+		id++;
 	});
 
 	return products;

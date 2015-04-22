@@ -23,8 +23,11 @@ var months = utils.getMonths();
 
 var years = utils.getDOBYears();	
 
+var id = 1;
+
 boys.forEach(function(b){
 	var boy = {
+		id : id,
 		name : b, 
 		sex : "M", 
 		contactNumber: Date.now(), 
@@ -32,10 +35,12 @@ boys.forEach(function(b){
 		dob : utils.getRandomItemFromArray(years) + '/' + utils.getRandomItemFromArray(months) + '/' + utils.getRandomItemFromArray(days)
 	}
 	customers.push(boy);
+	id++;
 });
 
 girls.forEach(function(b){
 	var girl = {
+		id : id,
 		name : b, 
 		sex : "F", 
 		contactNumber: Date.now(), 
@@ -43,6 +48,7 @@ girls.forEach(function(b){
 		dob : utils.getRandomItemFromArray(years) + '/' + utils.getRandomItemFromArray(months) + '/' + utils.getRandomItemFromArray(days)
 	}
 	customers.push(girl);
+	id++;
 });
 
 customers = utils.shuffleArray(customers);

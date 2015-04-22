@@ -38,7 +38,7 @@ function createAdressCsv(){
 }
 
 
-createCustomerCsv();
-createProductsCsv();
-createRegionsCsv();
-//createAdressCsv();
+// createCustomerCsv();
+// createProductsCsv();
+// createRegionsCsv();
+createAdressCsv();
