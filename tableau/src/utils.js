@@ -91,4 +91,4 @@ Utils.prototype.saveCSVStringToFile = function(csvFilePath, csvAsStr){
 }
 
 
-module.exports = Utils;
+module.exports = new Utils();
