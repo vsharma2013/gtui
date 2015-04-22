@@ -18,7 +18,16 @@ function createProductsCsv(){
 	console.log('*** Total products =  ' + products.length);
 }
 
+function createRegionsCsv(){
+	var regions = require('./regions');
+	var regionCsvStr = utils.convertObjectsToCSV(regions);
+	var regionsCsvFilePath = rootDir + 'regions.csv';
+	utils.saveCSVStringToFile(regionsCsvFilePath, regionCsvStr);	
+	console.log('*** Total regions =  ' + regions.length);
+}
 
 
 //createCustomerCsv();
-createProductsCsv();
+//createProductsCsv();
+
+createRegionsCsv();
