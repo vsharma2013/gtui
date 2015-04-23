@@ -28,15 +28,15 @@ function getTimesForYearMonth(year, month){
 }
 
 function getTimesForYearMonthDay(year, month, day){
-	var h1 = utils.randomIntFromInterval(1, 24);
-	var h2 = utils.randomIntFromInterval(1, 24);
-	var h3 = utils.randomIntFromInterval(1, 24);
-	var h4 = utils.randomIntFromInterval(1, 24);
+	var h1 = utils.randomIntFromInterval(0, 23);
+	var h2 = utils.randomIntFromInterval(0, 24);
+	var h3 = utils.randomIntFromInterval(0, 24);
+	var h4 = utils.randomIntFromInterval(0, 24);
 
-	var m1 = utils.randomIntFromInterval(1, 60);
-	var m2 = utils.randomIntFromInterval(1, 60);
-	var m3 = utils.randomIntFromInterval(1, 60);
-	var m4 = utils.randomIntFromInterval(1, 60);
+	var m1 = utils.randomIntFromInterval(0, 59);
+	var m2 = utils.randomIntFromInterval(0, 59);
+	var m3 = utils.randomIntFromInterval(0, 59);
+	var m4 = utils.randomIntFromInterval(0, 59);
 
 	var t1 = {year : year, month : month, day : day, hour : h1, minute : m1 };
 	var t2 = {year : year, month : month, day : day, hour : h2, minute : m2 };

@@ -3,20 +3,17 @@ var utils = require('./utils')
 
 function getAddressesForCustomersAndRegions(customers, regions){
 	var addresses = [];
+	var regionsClone = regions.slice(0);
 	var customersCount = customers.length;
 	var regionsCount = regions.length;
-
-	var usedRegions = [];
 	var id = 1;
 
 	customers.forEach(function(c){
-		if(regions.length === 0){
-			regions = usedRegions;
-			usedRegions = [];
+		if(regionsClone.length === 0){
+			regionsClone = regions.slice(0);;
 		}
 
-		var r = regions.pop();
-		usedRegions.push(r);
+		var r = regionsClone.pop();
 
 		addresses.push({
 			id: id,
@@ -27,6 +24,7 @@ function getAddressesForCustomersAndRegions(customers, regions){
 		});
 		id++;
 	}) ;
+	
 	return addresses;
 }
 module.exports = {
