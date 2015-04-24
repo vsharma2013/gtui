@@ -32,7 +32,7 @@ boys.forEach(function(b){
 		sex : "M", 
 		contactNumber: Date.now(), 
 		email : b.replace(/ /g,'') + utils.getRandomItemFromArray(domains),
-		dob : utils.getRandomItemFromArray(years) + '/' + utils.getRandomItemFromArray(months) + '/' + utils.getRandomItemFromArray(days)
+		dob : getRandomDate()
 	}
 	customers.push(boy);
 	id++;
@@ -45,11 +45,22 @@ girls.forEach(function(b){
 		sex : "F", 
 		contactNumber: Date.now(), 
 		email : b.replace(/ /g,'') + utils.getRandomItemFromArray(domains),
-		dob : utils.getRandomItemFromArray(years) + '/' + utils.getRandomItemFromArray(months) + '/' + utils.getRandomItemFromArray(days)
+		dob : getRandomDate()
 	}
 	customers.push(girl);
 	id++;
 });
+
+function getRandomDate(){
+	var year = utils.getRandomItemFromArray(years);
+	var month = utils.getRandomItemFromArray(months);
+	var day = utils.getRandomItemFromArray(days);
+	if(month === 2 && day > 28) day = 28;
+	if(month < 10) month = '0' + month;
+	if(day < 10) day = '0' + day;
+
+	return year + '/' + month + '/' + day;
+}
 
 customers = utils.shuffleArray(customers);
 
