@@ -16,11 +16,13 @@ function getSalesForProductsAddressesAndTimes(products, addresses, times){
 
 		var customerInfo = getCustomerAndRegionFromAdress(addressesClone);
 		sales.push({
+			id : id,
 			productId : getProductId(productsClone),
 			customerId : customerInfo.customerId,
 			regionId : customerInfo.regionId,
-			timeId : getTime(timesClone)
+			timestamp : getTime(timesClone)
 		});
+		id++;
 	};
 
 	return sales;
@@ -41,6 +43,9 @@ function getProductId(products){
 
 function getTime(times){
 	var t = times.pop();
+	if(t.month === 2 && t.day > 28) t.day = 28;
+	if(t.month < 10) t.month = '0' + t.month;
+	if(t.day < 10) t.day = '0' + t.day;
 	var time = t.year + '/' + t.month + '/' + t.day;// + '   ' + t.hour + ':' + t.minute;
 	return time;
 }

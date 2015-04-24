@@ -18,7 +18,8 @@ function createDataTables(customers, products, regions, addForCustNReg, times){
 	//createProductsTable(products, connection);
 	//createCustomersTable(customers, connection);
 	//createRegionsTable(regions, connection);
-	createAddressesTable(addForCustNReg, connection);
+	//createAddressesTable(addForCustNReg, connection);
+	createSalesTable(products, addForCustNReg, times, connection);
 }
 
 function createProductsTable(products, conn){
@@ -49,12 +50,15 @@ function createRegionsTable(regions, conn){
 }
 
 
-function executeQuery(conn, sqlQuery, values, tableName){
+function executeQuery(conn, sqlQuery, values, tableName, callback){
 	conn.query(sqlQuery, [values], function(err) {
 	    if (err) 
 	    	console.log(err);
-	    else
+	    else{
 	    	console.log('created ' + tableName + ' table successfully');
+	    	if(callback)
+	    		callback();
+	    }
 	});	
 }
 
@@ -66,6 +70,46 @@ function createAddressesTable(addForCustNReg, conn){
 	});
 	executeQuery(conn, sql, values, 'addresses');	
 }
+
+function createSalesTable(products, addForCustNReg, times, conn){
+	var sales = require('./sales');
+	var salesForProductsNAddresses = sales.getSalesForProductsAddressesAndTimes(products, addForCustNReg, times);
+	var salesCnt = salesForProductsNAddresses.length;
+	//console.log(salesForProductsNAddresses);
+	//console.log("total sales = " + salesCnt);
+	var TWENTY_FIVE_K = 25000;
+	var sales25K = [];
+	
+	function onInsertComplete(){
+		sales25K = [];
+		var remainingSales = salesForProductsNAddresses.length;
+		if(remainingSales === 0 ) {
+			conn.end();
+			return ;
+		}
+
+		var max = remainingSales > TWENTY_FIVE_K ? TWENTY_FIVE_K : remainingSales;
+		for (var i = 0; i < max; i++) {
+			sales25K.push(salesForProductsNAddresses.pop());
+		};
+		insert25KSalesRecords(sales25K, conn, onInsertComplete);
+	}
+
+	for (var i = 0; i < TWENTY_FIVE_K; i++) {
+		sales25K.push(salesForProductsNAddresses.pop());
+	};
+	insert25KSalesRecords(sales25K, conn, onInsertComplete);
+}
+
+function insert25KSalesRecords(sales25K, conn, cbOnInsertComplete){
+	var sql = "INSERT INTO sales (id, productId, customerId, regionId, timestamp) VALUES ?";
+	var values = [];
+	sales25K.forEach(function(s){
+		values.push([s.id, s.productId, s.customerId, s.regionId, s.timestamp]);
+	});
+	executeQuery(conn, sql, values, 'sales', cbOnInsertComplete);	
+}
+
 module.exports = {
 	createDataTables : createDataTables
 }
