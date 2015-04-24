@@ -14,9 +14,16 @@ var addForCustNReg = addresses.getAddressesForCustomersAndRegions(customers, reg
 addForCustNReg = utils.shuffleArray(addForCustNReg);
 
 
-function createCsvFiles(customers, products, regions, addForCustNReg, times){
+function createCsvFiles(){
 	var csv = require('./csv');
 	csv.createCsvFiles(customers, products, regions, addForCustNReg, times);
 }
 
-createCsvFiles(customers, products, regions, addForCustNReg, times);
+function createMySqlTables(){
+	var csv = require('./mysql');
+	csv.createDataTables(customers, products, regions, addForCustNReg, times);
+}
+
+//createCsvFiles();
+
+createMySqlTables();
