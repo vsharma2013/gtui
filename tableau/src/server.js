@@ -24,6 +24,6 @@ function createMySqlTables(){
 	csv.createDataTables(customers, products, regions, addForCustNReg, times);
 }
 
-//createCsvFiles();
+createCsvFiles();
 
-createMySqlTables();
+//createMySqlTables();

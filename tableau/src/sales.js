@@ -4,7 +4,7 @@ function getSalesForProductsAddressesAndTimes(products, addresses, times){
 	var sales = [];
 	var id = 1;
 	var ONE_LAKH = 100 * 1000;
-	var totalSalesVolume = ONE_LAKH * 1;
+	var totalSalesVolume = ONE_LAKH * 5;
 	var productsClone = products.slice(0);
 	var addressesClone = addresses.slice(0);
 	var timesClone = times.slice(0);
