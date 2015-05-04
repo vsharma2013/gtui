@@ -2,7 +2,7 @@
 var utils = require('./utils');
 var sales = require('./sales');
 
-var rootDir = 'P:\\zlast2weeks\\gtui\\tableau\\';
+var rootDir = '//Users//vishal//devapps//nodeapps//salesDB//gtui//tableau//';
 
 var FILE_NAME = {
 	CUSTOMER_CSV : rootDir + 'customers.csv',

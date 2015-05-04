@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "csv": "^0.4.1",
+    "elasticsearch": "^4.0.2",
     "fs": "0.0.2",
     "mysql": "^2.6.2"
   }

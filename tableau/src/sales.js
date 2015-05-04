@@ -28,6 +28,36 @@ function getSalesForProductsAddressesAndTimes(products, addresses, times){
 	return sales;
 }
 
+function getDenormedSalesForProductsAddressesAndTimes(products, addresses, times){
+	var sales = [];
+	var id = 1;
+	var ONE_LAKH = 100 * 1000;
+	var totalSalesVolume = ONE_LAKH * 5;
+	var productsClone = products.slice(0);
+	var addressesClone = addresses.slice(0);
+	var timesClone = times.slice(0);
+
+	for (var i = 0; i < totalSalesVolume; i++) {
+		productsClone = productsClone.length === 0 ? products.slice(0) : productsClone;
+		addressesClone = addressesClone.length === 0 ? addresses.slice(0) : addressesClone;
+		timesClone = timesClone.length === 0 ? times.slice(0) : timesClone;
+
+		var address = addressesClone.pop();
+		var product = productsClone.pop();
+		var customer = 
+		sales.push({
+			id : id,
+			product : product,
+			customer : address.customer,
+			region : address.region,
+			timestamp : getTime(timesClone)
+		});
+		id++;
+	};
+
+	return sales;
+}
+
 function getCustomerAndRegionFromAdress(addresses){
 	var a = addresses.pop();
 	return {
@@ -42,7 +72,9 @@ function getProductId(products){
 }
 
 function getTime(times){
-	var t = times.pop();
+	var tOrg = times.pop();
+	var t = JSON.parse(JSON.stringify(tOrg));
+
 	if(t.month === 2 && t.day > 28) t.day = 28;
 	if(t.month < 10) t.month = '0' + t.month;
 	if(t.day < 10) t.day = '0' + t.day;
@@ -51,5 +83,6 @@ function getTime(times){
 }
 
 module.exports = {
-	getSalesForProductsAddressesAndTimes : getSalesForProductsAddressesAndTimes
+	getSalesForProductsAddressesAndTimes : getSalesForProductsAddressesAndTimes,
+	getDenormedSalesForProductsAddressesAndTimes : getDenormedSalesForProductsAddressesAndTimes
 }

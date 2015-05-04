@@ -6,6 +6,7 @@ var addresses = require('./address');
 var times = require('./times');
 
 
+
 customers = utils.shuffleArray(customers);
 products = utils.shuffleArray(products);
 regions = utils.shuffleArray(regions);
@@ -24,6 +25,16 @@ function createMySqlTables(){
 	csv.createDataTables(customers, products, regions, addForCustNReg, times);
 }
 
-createCsvFiles();
+function createESIndices(){
+	var es = require('./elasticsearch');
+	var addForCustNReg = addresses.getDenormedAddressesForCustomersAndRegions(customers, regions);
+	addForCustNReg = utils.shuffleArray(addForCustNReg);
+	es.createESIndices(customers, products, regions, addForCustNReg, times); 
+}
+
+
+//createCsvFiles();
 
 //createMySqlTables();
+
+createESIndices();

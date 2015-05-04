@@ -27,6 +27,33 @@ function getAddressesForCustomersAndRegions(customers, regions){
 	
 	return addresses;
 }
+
+function getDenormedAddressesForCustomersAndRegions(customers, regions){
+	var addresses = [];
+	var regionsClone = regions.slice(0);
+	var customersCount = customers.length;
+	var regionsCount = regions.length;
+	var id = 1;
+
+	customers.forEach(function(c){
+		if(regionsClone.length === 0){
+			regionsClone = regions.slice(0);;
+		}
+
+		var r = regionsClone.pop();
+
+		addresses.push({
+			customer : c,
+			line1 : "Flat No Z 603",
+			line2 : "Skyline Apprtments, Andheri",
+			region : r
+		});
+		id++;
+	}) ;
+	
+	return addresses;
+}
 module.exports = {
-	getAddressesForCustomersAndRegions : getAddressesForCustomersAndRegions
+	getAddressesForCustomersAndRegions : getAddressesForCustomersAndRegions,
+	getDenormedAddressesForCustomersAndRegions : getDenormedAddressesForCustomersAndRegions
 };
