@@ -1,0 +1,5 @@
+.DS_Store
+tableau/.DS_Store
+tableau/*.csv
+tableau/src/.DS_Store
+tableau/src/node_modules/
