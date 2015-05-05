@@ -1,22 +1,36 @@
-var client = new $.es.Client({
-  hosts: 'localhost:9200'
-});
+$(document).ready(onAppReady);
 
-var query = {};
+function onAppReady(){
+	var esApp = new ESApp();
+}
 
-query = getBasicQuery();
+function ESApp(){
+	this.init();
+};
 
-client.search(query).then(onQueryResponse, onQueryError	);
+ESApp.prototype.init = function(){
+	this.client = new $.es.Client({
+	  hosts: 'localhost:9200'
+	});
 
-function onQueryResponse(resp){
+	this.executeQuery();
+}
+
+ESApp.prototype.executeQuery = function(){
+	var query = {};
+	query = this.getBasicQuery();
+	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+}
+
+ESApp.prototype.onQueryResponse = function(resp){
 	console.log(resp);
 }
 
-function onQueryError(err){
+ESApp.prototype.onQueryError = function(err){
 	console.trace(err.message);
 }
 
-function getBasicQuery(){
+ESApp.prototype.getBasicQuery = function(){
 	return {
 		index: 'companysales',
 		type: 'sales',
