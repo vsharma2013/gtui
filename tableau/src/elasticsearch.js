@@ -2,7 +2,7 @@ var elasticsearch = require('elasticsearch');
 var sales = require('./sales');
 
 var salesIndexName = 'companysales';
-var salesTypeName = 'sales;'
+var salesTypeName = 'sales';
 var id = 1;
 
 var client = new elasticsearch.Client({
