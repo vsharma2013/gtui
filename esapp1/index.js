@@ -18,8 +18,9 @@ ESApp.prototype.init = function(){
 
 ESApp.prototype.executeQuery = function(){
 	var query = {};
-	query = this.getBasicQuery();
-	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+	//query = this.getBasicQuery();
+	//this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+	this.executeAjaxCreateIndex();
 }
 
 ESApp.prototype.onQueryResponse = function(resp){
@@ -40,7 +41,79 @@ ESApp.prototype.getBasicQuery = function(){
 					category: 'Automobile'
 				}
 			},
+			//fields : ['city'],
 			size:25
 		}
 	}
+}
+
+ESApp.prototype.getFilteredQuery = function(){
+	return { //doesn't works
+		index: 'companysales',
+		type: 'sales',
+		body: {
+			query: {
+				filtered: {
+					query :{
+						match_all: {
+							//category: 'Clothing'
+						}
+					},
+					filter : {
+						"brand" : ['Wrangler']
+					}
+
+				}		
+			},
+			size:25,
+			_source : false,
+			fields : ['product.brand', 'customer.name']
+		}
+	}
+}
+
+ESApp.prototype.executeAjax = function(){
+	var req = {
+	    query : {
+	        filtered: {
+				query :{
+					match: {
+						category: 'Clothing'
+					}
+				},
+				filter : {
+					// bool : {
+					// 	should : {
+					// 		term : {"brand" : 'Wrangler'}
+					// 	}
+					// }
+				}
+			}
+	    }
+	};
+	var options = {
+		url : 'http://localhost:9200/companysales/sales/_search?',
+		type : 'POST',
+		data : JSON.stringify(req),
+		contentType : 'application/json',
+		success : function(data){
+			console.log(data);
+		},
+		error : function(a,b,c){
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
+	}
+	$.ajax(options);	
+}
+
+ESApp.prototype.executeAjaxCreateIndex = function(){
+	var options = {
+		url : 'http://localhost:9200/companysales',
+		type : 'PUT',
+		success : function(data) { console.log(data);},
+		error : function(a,b,c) { console.log('error in creating index')}
+	}; 
+	$.ajax(options);
 }
