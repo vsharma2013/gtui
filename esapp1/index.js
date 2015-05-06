@@ -162,5 +162,4 @@ ESApp.prototype.getAndFilteredQuery = function(){
 			_source : true
 		}
 	}
-
 }
