@@ -87,6 +87,7 @@ ESApp.prototype.putMapping = function(){
 
 ESApp.prototype.onQueryResponse = function(resp){
 	console.log(resp);
+	this.showResultsTable(resp);
 }
 
 ESApp.prototype.onQueryError = function(err){
@@ -270,4 +271,39 @@ ESApp.prototype.getESQueryFromSearchAndFilters = function(searchAndFilters){
 	}
 	return esQuery;
 }
+
+ESApp.prototype.showResultsTable = function(resp){
+	var total = resp.hits.total;
+	var hits = resp.hits.hits;
+	var count = hits.length;
+	var time = resp.took;
+	$('#results').text('Showing ' + count +' of ' + total + ' results in ' + time + ' milliseconds');
+
+	var rowHtml = '<tr>'+
+			        '<td align="center">ID_PRODUCT</td>'+
+			    	'<td align="center">ID_REGION</td>'+
+			    	'<td align="center">ID_CUSTOMER</td>'+
+			  	  '</tr>';
+	var $tbody = $('.resultsTable tbody');
+	hits.forEach(function(h){
+		var p = h._source.product;
+		var product = p.category + '-' + p.type + '-' + p.brand + '-' + p.model;
+		var r = h._source.region;
+		var region = r.city + '-' + r.state + ' (' + r.region + ')';
+		var customer = h._source.customer.name;
+
+		var row = rowHtml.replace('ID_PRODUCT', product).replace('ID_REGION', region).replace('ID_CUSTOMER', customer);
+		var $trow = $(row);
+		$trow.appendTo($tbody);
+	});
+
+}
+
+
+
+
+
+
+
+
 
