@@ -16,98 +16,6 @@ ESApp.prototype.init = function(){
 	this.executeQuery();
 }
 
-ESApp.prototype.executeQuery = function(){
-	var query = {};
-	query = this.getFilteredQuery();
-	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
-	//this.executeAjaxCreateIndex();
-	//this.putMapping();
-}
-
-ESApp.prototype.onQueryResponse = function(resp){
-	console.log(resp);
-}
-
-ESApp.prototype.onQueryError = function(err){
-	console.trace(err.message);
-}
-
-ESApp.prototype.getBasicQuery = function(){
-	return {
-		index: 'companysales',
-		type: 'sales',
-		body: {
-			query: {
-				match: {
-					category: 'Automobile'
-				}
-			},
-			//fields : ['city'],
-			size:25
-		}
-	}
-}
-
-ESApp.prototype.getFilteredQuery = function(){
-	return {
-		index: 'companysales',
-		type: 'sales',
-		body: {
-			query: {
-				filtered: {
-					query :{
-						match: {
-							category: 'Clothing'
-						}
-					},
-					filter : {
-						term : {'brand' : 'Levis'}
-					}
-
-				}		
-			},
-			size:25,
-			_source : true
-		}
-	}
-}
-
-ESApp.prototype.executeAjax = function(){
-	var req = {
-	    query : {
-	        filtered: {
-				query :{
-					match: {
-						category: 'Clothing'
-					}
-				},
-				filter : {
-					// bool : {
-					// 	should : {
-					// 		term : {"brand" : 'Wrangler'}
-					// 	}
-					// }
-				}
-			}
-	    }
-	};
-	var options = {
-		url : 'http://localhost:9200/companysales/sales/_search?',
-		type : 'POST',
-		data : JSON.stringify(req),
-		contentType : 'application/json',
-		success : function(data){
-			console.log(data);
-		},
-		error : function(a,b,c){
-			console.log(a);
-			console.log(b);
-			console.log(c);
-		}
-	}
-	$.ajax(options);	
-}
-
 ESApp.prototype.executeAjaxCreateIndex = function(){
 	var self = this;
 	var options = {
@@ -169,4 +77,90 @@ ESApp.prototype.putMapping = function(){
 		error : function(a,b,c) { console.log('error in puuting mapping')}
 	}; 
 	$.ajax(options);
+}
+
+ESApp.prototype.onQueryResponse = function(resp){
+	console.log(resp);
+}
+
+ESApp.prototype.onQueryError = function(err){
+	console.trace(err.message);
+}
+
+ESApp.prototype.executeQuery = function(){
+	var query = {};
+	query = this.getAndFilteredQuery();
+	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+	//this.executeAjaxCreateIndex();
+	//this.putMapping();
+}
+
+ESApp.prototype.getBasicQuery = function(){
+	return {
+		index: 'companysales',
+		type: 'sales',
+		body: {
+			query: {
+				match: {
+					category: 'Automobile'
+				}
+			},
+			//fields : ['city'],
+			size:25
+		}
+	}
+}
+
+ESApp.prototype.getBasicFilteredQuery = function(){
+	return {
+		index: 'companysales',
+		type: 'sales',
+		body: {
+			query: {
+				filtered: {
+					query :{
+						match: {
+							category: 'Automobile'
+						}
+					},
+					filter : {
+						term : {'brand' : 'BMW'}
+					}
+
+				}		
+			},
+			size:25,
+			_source : true
+		}
+	}
+}
+
+ESApp.prototype.getAndFilteredQuery = function(){
+	return {
+		index: 'companysales',
+		type: 'sales',
+		body: {
+			query: {
+				filtered: {
+					query :{
+						match: {
+							category: 'Automobile'
+						}
+					},
+					filter : {
+						and : [
+							{term : {'brand' : 'BMW'}},
+							{term : {'region': 'South'}},
+							{term : {'city' : 'Guntur'}}
+						]
+						
+					}
+
+				}		
+			},
+			size:25,
+			_source : true
+		}
+	}
+
 }
