@@ -12,8 +12,14 @@ ESApp.prototype.init = function(){
 	this.client = new $.es.Client({
 	  hosts: 'localhost:9200'
 	});
+	this.initUI();
+	$('#search').on('click', this.executeQuery.bind(this));
+}
 
-	this.executeQuery();
+ESApp.prototype.initUI = function(){
+	$('#results').text('');
+	$('.resultsTable tbody').html('')
+
 }
 
 ESApp.prototype.executeAjaxCreateIndex = function(){
@@ -87,14 +93,6 @@ ESApp.prototype.onQueryError = function(err){
 	console.trace(err.message);
 }
 
-ESApp.prototype.executeQuery = function(){
-	var query = {};
-	query = this.getAndFilteredQuery();
-	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
-	//this.executeAjaxCreateIndex();
-	//this.putMapping();
-}
-
 ESApp.prototype.getBasicQuery = function(){
 	return {
 		index: 'companysales',
@@ -163,3 +161,113 @@ ESApp.prototype.getAndFilteredQuery = function(){
 		}
 	}
 }
+
+ESApp.prototype.executeQuery = function(){
+	this.initUI();
+	var uiInput = this.getInputValues();
+	var searchAndFilters = this.getSearchAndFilterFromInput(uiInput);
+	if(!searchAndFilters.isInputOK){
+		console.error('error in parsing the inputs');
+		return;
+	}
+
+	var esQuery = this.getESQueryFromSearchAndFilters(searchAndFilters);
+	console.log(esQuery);
+
+	this.client.search(esQuery).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+	
+}
+
+ESApp.prototype.getInputValues = function(){
+	return {
+		category : $('#category').val(),
+		type : $('#type').val(),
+		brand : $('#brand').val(),
+		model : $('#model').val(),
+		region : $('#region').val(),
+		state : $('#state').val(),
+		city : $('#city').val(),
+		pincode : $('#pincode').val()
+	};
+}
+
+ESApp.prototype.getSearchAndFilterFromInput = function(uiInput){
+	var self = this;
+	var result = {
+		query:{
+			name:'', 
+			value : ''
+		}, 
+		filters: [], 
+		isInputOK : false, 
+		hasFilters : false
+	};
+	var bFirst = true;
+
+	var keys = Object.keys(uiInput);
+	keys.forEach(function(k){
+		var val = uiInput[k];
+		if(!self.isEmptyString(val)){
+			if(bFirst){
+				result.query.name = k;
+				result.query.value = uiInput[k];
+				bFirst = false;
+			}
+			else{
+				result.filters.push({name : k, value : val});
+			}
+		}
+	});
+
+	result.isInputOK = !self.isEmptyString(result.query.value);
+	result.hasFilters = result.isInputOK && result.filters.length > 0;
+	return result;
+}
+
+ESApp.prototype.isEmptyString = function(str){
+	if(!str) return true;
+	if(str.length === 0) return true;
+	return (/^\s*$/).test(str);
+}
+
+ESApp.prototype.getESQueryFromSearchAndFilters = function(searchAndFilters){
+	var esQuery = {
+		index : 'companysales',
+		type: 'sales',
+		body: {
+			query:{
+			}
+		}
+	};
+
+	if(!searchAndFilters.hasFilters){
+		esQuery.body.query.match = {};
+		esQuery.body.query.match[searchAndFilters.query.name] = searchAndFilters.query.value;
+	}
+	else{
+		esQuery.body.query.filtered = {
+			query : {
+				match : {}
+			},
+			filter:{}
+		};
+
+		esQuery.body.query.filtered.query.match[searchAndFilters.query.name] = searchAndFilters.query.value;
+
+		if(searchAndFilters.filters.length === 1){
+			esQuery.body.query.filtered.filter.term = {};
+			esQuery.body.query.filtered.filter.term[searchAndFilters.filters[0].name] = searchAndFilters.filters[0].value;
+		}
+		else{
+			esQuery.body.query.filtered.filter.and = [];
+			var filters = searchAndFilters.filters;
+			filters.forEach(function(f){
+				var term = {term: {}};
+				term.term[f.name] = f.value;
+				esQuery.body.query.filtered.filter.and.push(term);
+			});
+		}
+	}
+	return esQuery;
+}
+

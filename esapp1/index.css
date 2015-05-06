@@ -1,1 +1,108 @@
-index.css
+
+.border{
+	border-style: solid;
+	border-width: 1px;
+}
+
+.container{
+	position:relative;
+	top  : 2%;
+	left : 2%;
+	height : 600px;
+	width : 90%;
+}
+
+.searchContainer{
+	position: relative;
+	height : 25%;
+}
+
+.searchRow{
+	height: 100%;
+	padding-top: 5px;
+}
+
+.resultsContainer{
+	position : relative;
+	height: 75%;
+}
+
+.left, .productCol{
+	float: left;
+}
+
+.right, .regionCol{
+	float:right;
+}
+
+.productCol{
+	position:relative;
+	left:20%;
+}
+
+.regionCol{
+	position:relative;
+	right: 40%;
+}
+
+.input {
+	margin-left: 5px;
+}
+
+.row{
+	margin-top: 5px;
+}
+
+.submitCol{
+	position: relative;
+	float: left;
+	left: 24%;
+	top: 70%;
+	border-style: solid;
+	border-width: thin;
+	height: 30px;
+	width: 100px;
+	background: -webkit-linear-gradient(top,#4387fd,#4683ea);
+	cursor: pointer;
+}
+
+.submitCol span{
+	position: relative;
+	top: 15%;
+	left: 25%;	
+}
+
+.countRow {
+	height : 10%;
+	margin-top:10px;
+}
+
+.countRow span{
+	margin-left:10px;
+	font-size: larger;
+	font-weight: 600;
+	color: rgb(49, 50, 200);
+}
+
+.resultsRow {
+	height:90%;
+}
+
+.resultsTable {
+	position: relative;
+	width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
