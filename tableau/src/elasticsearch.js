@@ -12,11 +12,11 @@ var client = new elasticsearch.Client({
 });
 
 function createESIndices(customers, products, regions, addForCustNReg, times){
-	deleteIndex(salesIndexName, function(err){
-		if(err){
-			console.log(err);
-			return;
-		}
+	// deleteIndex(salesIndexName, function(err){
+	// 	if(err){
+	// 		console.log(err);
+	// 		return;
+	// 	}
 		var salesDocs = sales.getDenormedSalesForProductsAddressesAndTimes(products, addForCustNReg, times);
 		var sales20KDoc = [];
 		var TWENTY_K = 20000;
@@ -37,7 +37,7 @@ function createESIndices(customers, products, regions, addForCustNReg, times){
 		};
 		add20KSalesDoc(sales20KDoc, onComplete);
 		
-	});
+	//});
 }
 
 function add20KSalesDoc(sales20KDoc, cbOnComplete){

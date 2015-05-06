@@ -18,9 +18,10 @@ ESApp.prototype.init = function(){
 
 ESApp.prototype.executeQuery = function(){
 	var query = {};
-	//query = this.getBasicQuery();
-	//this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
-	this.executeAjaxCreateIndex();
+	query = this.getFilteredQuery();
+	this.client.search(query).then(this.onQueryResponse.bind(this), this.onQueryError.bind(this));
+	//this.executeAjaxCreateIndex();
+	//this.putMapping();
 }
 
 ESApp.prototype.onQueryResponse = function(resp){
@@ -48,26 +49,25 @@ ESApp.prototype.getBasicQuery = function(){
 }
 
 ESApp.prototype.getFilteredQuery = function(){
-	return { //doesn't works
+	return {
 		index: 'companysales',
 		type: 'sales',
 		body: {
 			query: {
 				filtered: {
 					query :{
-						match_all: {
-							//category: 'Clothing'
+						match: {
+							category: 'Clothing'
 						}
 					},
 					filter : {
-						"brand" : ['Wrangler']
+						term : {'brand' : 'Levis'}
 					}
 
 				}		
 			},
 			size:25,
-			_source : false,
-			fields : ['product.brand', 'customer.name']
+			_source : true
 		}
 	}
 }
@@ -109,11 +109,64 @@ ESApp.prototype.executeAjax = function(){
 }
 
 ESApp.prototype.executeAjaxCreateIndex = function(){
+	var self = this;
 	var options = {
 		url : 'http://localhost:9200/companysales',
 		type : 'PUT',
-		success : function(data) { console.log(data);},
+		success : function(data) { 
+			console.log(data);
+			if(data.acknowledged){
+				self.putMapping();
+			}
+		},
 		error : function(a,b,c) { console.log('error in creating index')}
+	}; 
+	$.ajax(options);
+}
+
+ESApp.prototype.putMapping = function(){
+	var url = 'http://localhost:9200/companysales/_mapping/sales';
+	var mapping = {
+		sales : {
+			properties : {
+				product : {
+					properties : {
+						id : {'type': 'long'},
+						category : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						type : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						brand : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						model : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'}
+					}
+				},
+				customer : {
+					properties: {
+						id : {'type': 'long'},
+						sex : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						email : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						contactNumber : {'type' : 'long'},
+						dob : {'type':'date', 'format':'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd'}
+					}
+				},
+				region : {
+					properties: {
+						id : {'type': 'long'},
+						region : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						state : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						city : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						pincode : {'type' : 'long'}						
+					}
+				},
+				timestamp:{'type':'date','format':'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd'}
+			}
+		}
+	};
+
+	var options = {
+		url : url,
+		type : 'PUT',
+		data : JSON.stringify(mapping),
+		success : function(data) { console.log(data);},
+		error : function(a,b,c) { console.log('error in puuting mapping')}
 	}; 
 	$.ajax(options);
 }
