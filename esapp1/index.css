@@ -31,6 +31,9 @@
 	float: left;
 }
 
+span.left{
+	width: 50px;
+}
 .right, .regionCol{
 	float:right;
 }
@@ -46,7 +49,7 @@
 }
 
 .input {
-	margin-left: 5px;
+	margin-left: 20px;
 }
 
 .row{

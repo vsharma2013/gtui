@@ -188,7 +188,7 @@ ESApp.prototype.getInputValues = function(){
 		region : $('#region').val(),
 		state : $('#state').val(),
 		city : $('#city').val(),
-		pincode : $('#pincode').val()
+		name : $('#customer').val()
 	};
 }
 
@@ -290,7 +290,7 @@ ESApp.prototype.showResultsTable = function(resp){
 		var product = p.category + '-' + p.type + '-' + p.brand + '-' + p.model;
 		var r = h._source.region;
 		var region = r.city + '-' + r.state + ' (' + r.region + ')';
-		var customer = h._source.customer.name;
+		var customer = h._source.customer.name + '-' + h._source.customer.id;
 
 		var row = rowHtml.replace('ID_PRODUCT', product).replace('ID_REGION', region).replace('ID_CUSTOMER', customer);
 		var $trow = $(row);
