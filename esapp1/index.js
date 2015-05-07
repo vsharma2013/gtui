@@ -14,12 +14,19 @@ ESApp.prototype.init = function(){
 	});
 	this.initUI();
 	$('#search').on('click', this.executeQuery.bind(this));
+	$(document).on('keypress', this.handleKeyPressEvent.bind(this));
 }
 
 ESApp.prototype.initUI = function(){
 	$('#results').text('');
 	$('.resultsTable tbody').html('')
 
+}
+
+ESApp.prototype.handleKeyPressEvent = function(e){
+	if(e.keyCode !== 13) return;
+
+	this.executeQuery();
 }
 
 ESApp.prototype.executeAjaxCreateIndex = function(){
