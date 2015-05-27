@@ -34,6 +34,20 @@ CREATE TABLE `regions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
 
+delimiter $$
+
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL,
+  `customerID` int(11) DEFAULT NULL,
+  `regionID` int(11) DEFAULT NULL,
+  `line1` varchar(45) DEFAULT NULL,
+  `line2` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_addresses_1_idx` (`customerID`),
+  KEY `fk_addresses_2_idx` (`regionID`),
+  CONSTRAINT `fk_addresses_1` FOREIGN KEY (`customerID`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_addresses_2` FOREIGN KEY (`regionID`) REFERENCES `regions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB 
 
 delimiter $$
 
