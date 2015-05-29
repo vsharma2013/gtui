@@ -10,9 +10,9 @@ function getSalesForProductsAddressesAndTimes(products, addresses, times){
 	var timesClone = times.slice(0);
 
 	for (var i = 0; i < totalSalesVolume; i++) {
-		productsClone = productsClone.length === 0 ? products.slice(0) : productsClone;
-		addressesClone = addressesClone.length === 0 ? addresses.slice(0) : addressesClone;
-		timesClone = timesClone.length === 0 ? times.slice(0) : timesClone;
+		productsClone = productsClone.length === 0 ? getRandomArrayFromRootArray(products) : productsClone;
+		addressesClone = addressesClone.length === 0 ? getRandomArrayFromRootArray(addresses) : addressesClone;
+		timesClone = timesClone.length === 0 ? getRandomArrayFromRootArray(times) : timesClone;
 
 		var customerInfo = getCustomerAndRegionFromAdress(addressesClone);
 		sales.push({
@@ -28,6 +28,11 @@ function getSalesForProductsAddressesAndTimes(products, addresses, times){
 	return sales;
 }
 
+function getRandomArrayFromRootArray(rootArr){
+	var rArr = rootArr.slice(0);
+	return utils.shuffleArray(rArr);
+}
+
 function getDenormedSalesForProductsAddressesAndTimes(products, addresses, times){
 	var sales = [];
 	var id = 1;
@@ -38,9 +43,9 @@ function getDenormedSalesForProductsAddressesAndTimes(products, addresses, times
 	var timesClone = times.slice(0);
 
 	for (var i = 0; i < totalSalesVolume; i++) {
-		productsClone = productsClone.length === 0 ? products.slice(0) : productsClone;
-		addressesClone = addressesClone.length === 0 ? addresses.slice(0) : addressesClone;
-		timesClone = timesClone.length === 0 ? times.slice(0) : timesClone;
+		productsClone = productsClone.length === 0 ? getRandomArrayFromRootArray(products) : productsClone;
+		addressesClone = addressesClone.length === 0 ? getRandomArrayFromRootArray(addresses) : addressesClone;
+		timesClone = timesClone.length === 0 ? getRandomArrayFromRootArray(times) : timesClone;
 
 		var address = addressesClone.pop();
 		var product = productsClone.pop();

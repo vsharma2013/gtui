@@ -1,4 +1,5 @@
 var elasticsearch = require('elasticsearch');
+var request = require('request');
 var sales = require('./sales');
 
 var salesIndexName = 'companysales';
@@ -12,32 +13,105 @@ var client = new elasticsearch.Client({
 });
 
 function createESIndices(customers, products, regions, addForCustNReg, times){
-	// deleteIndex(salesIndexName, function(err){
-	// 	if(err){
-	// 		console.log(err);
-	// 		return;
-	// 	}
-		var salesDocs = sales.getDenormedSalesForProductsAddressesAndTimes(products, addForCustNReg, times);
-		var sales20KDoc = [];
-		var TWENTY_K = 20000;
-
-		function onComplete(){
-			if(salesDocs.length === 0) return;
-
-			sales20KDoc = [];
-			var max = salesDocs.length > TWENTY_K ? TWENTY_K : salesDocs.length; 
-			for (var i = 0; i < max; i++) {
-		 		sales20KDoc.push(salesDocs.pop());
-			};
-			add20KSalesDoc(sales20KDoc, onComplete);
+	deleteIndex(salesIndexName, function(err){
+		if(err){
+			console.log(err);
+			return;
 		}
+		
+		createIndexAndMapping(customers, products, regions, addForCustNReg, times);
+	});
+}
 
-		for (var i = 0; i < TWENTY_K; i++) {
-			 sales20KDoc.push(salesDocs.pop());
+function createIndexAndMapping(customers, products, regions, addForCustNReg, times){
+	var options = {
+		url : 'http://localhost:9200/companysales',
+		method : 'PUT',
+	}; 
+	request(options, function(err, req, body){
+		if(err){
+			console.log('error in creating index');
+			return;
+		}
+		var data = JSON.parse(body);
+		if(data.acknowledged){
+			console.log('created index successfully');
+			putMapping(customers, products, regions, addForCustNReg, times);
+		}
+	});
+}
+function putMapping(customers, products, regions, addForCustNReg, times){
+	var url = 'http://localhost:9200/companysales/_mapping/sales';
+	var mapping = {
+		sales : {
+			properties : {
+				product : {
+					properties : {
+						id : {'type': 'long'},
+						category : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						type : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						brand : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						model : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'}
+					}
+				},
+				customer : {
+					properties: {
+						id : {'type': 'long'},
+						sex : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						email : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						contactNumber : {'type' : 'long'},
+						dob : {'type':'date', 'format':'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd'}
+					}
+				},
+				region : {
+					properties: {
+						id : {'type': 'long'},
+						region : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						state : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						city : {'type' : 'string', 'index' : 'not_analyzed', 'store' : 'true'},
+						pincode : {'type' : 'long'}						
+					}
+				},
+				timestamp:{'type':'date','format':'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd'}
+			}
+		}
+	};
+
+	var options = {
+		url : url,
+		method : 'PUT',
+		json : mapping
+	}; 
+	request(options, function(err, req, body){
+		if(err){
+			console.log('error in creating mapping');
+			return;
+		}
+		addTypesToIndex(customers, products, regions, addForCustNReg, times);
+	});	
+}
+
+function addTypesToIndex(customers, products, regions, addForCustNReg, times){
+	var salesDocs = sales.getDenormedSalesForProductsAddressesAndTimes(products, addForCustNReg, times);
+	var sales20KDoc = [];
+	var TWENTY_K = 20000;
+
+	function onComplete(){
+		if(salesDocs.length === 0) return;
+
+		sales20KDoc = [];
+		var max = salesDocs.length > TWENTY_K ? TWENTY_K : salesDocs.length; 
+		for (var i = 0; i < max; i++) {
+	 		sales20KDoc.push(salesDocs.pop());
 		};
 		add20KSalesDoc(sales20KDoc, onComplete);
-		
-	//});
+	}
+
+	for (var i = 0; i < TWENTY_K; i++) {
+	 	sales20KDoc.push(salesDocs.pop());
+	};
+
+	add20KSalesDoc(sales20KDoc, onComplete);
 }
 
 function add20KSalesDoc(sales20KDoc, cbOnComplete){
