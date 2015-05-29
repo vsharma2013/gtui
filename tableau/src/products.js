@@ -154,7 +154,7 @@ var AC_Kenstar = ['Kenstar1', 'Kenstar2', 'Kenstar3', 'Kenstar4', 'Kenstar5', 'K
 
 var Bike_Bajaj = ['Bajaj1', 'Bajaj2', 'Bajaj3', 'Bajaj4', 'Bajaj5', 'Bajaj6', 'Bajaj7', 'Bajaj8', 'Bajaj9', 'Bajaj10' ];
 var Bike_Hero = ['Hero1', 'Hero2','Hero3','Hero4','Hero5','Hero6','Hero7','Hero8','Hero9','Hero10'];
-var Bike_Kawasaky = ['Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky', 'Kawasaky' ];
+var Bike_Kawasaky = ['Kawasaky1', 'Kawasaky2', 'Kawasaky3', 'Kawasaky4', 'Kawasaky5', 'Kawasaky6', 'Kawasaky7', 'Kawasaky8', 'Kawasaky9', 'Kawasaky10' ];
 var Bike_Yamaha = ['Yamaha1', 'Yamaha2','Yamaha3','Yamaha4','Yamaha5','Yamaha6','Yamaha7','Yamaha8','Yamaha9','Yamaha10'];
 var Bike_Suzuki = ['Suzuki1', 'Suzuki2', 'Suzuki3', 'Suzuki4', 'Suzuki5', 'Suzuki6', 'Suzuki7', 'Suzuki8', 'Suzuki9', 'Suzuki10'];
 var Car_Maruti = ['Maruti1', 'Maruti2', 'Maruti3', 'Maruti4', 'Maruti5', 'Maruti6', 'Maruti7', 'Maruti8', 'Maruti9', 'Maruti10' ];

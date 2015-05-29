@@ -98,6 +98,28 @@ span.left{
 
 
 
+.countRow {
+	height : 10%;
+	margin-top:10px;
+}
+
+.countRow span{
+	margin-left:10px;
+	font-size: larger;
+	font-weight: 600;
+	color: rgb(49, 50, 200);
+}
+
+.resultsRow {
+	height:90%;
+}
+
+.resultsTable {
+	position: relative;
+	width: 100%;
+}
+
+
 
 
 

@@ -33,8 +33,8 @@ function createESIndices(){
 }
 
 
-//createCsvFiles();
+createCsvFiles();
 
 //createMySqlTables();
 
-createESIndices();
+//createESIndices();

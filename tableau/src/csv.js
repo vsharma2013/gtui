@@ -3,6 +3,7 @@ var utils = require('./utils');
 var sales = require('./sales');
 
 var rootDir = '//Users//vishal//devapps//nodeapps//salesDB//gtui//tableau//';
+rootDir = '//Users//vishal//devapps//rapps//app2//';
 
 var FILE_NAME = {
 	CUSTOMER_CSV : rootDir + 'customers.csv',
