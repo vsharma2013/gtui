@@ -30,6 +30,8 @@ function onLoad(){
 	var frames = getFrames();
 	addBarCharts(frames);
 	refreshView();
+
+	addMouseEventHandlers();
 }
 
 function refreshView(){
@@ -166,6 +168,29 @@ Path.prototype.toString = function(){
 	});
 	path += ' Z';
 	return path;
+}
+
+var isRotating = false;
+
+function addMouseEventHandlers(){
+	$('#frameGroup').on('mousedown', trapRotation);
+	$('#frameGroup').on('mouseup', ceaseRotation);
+	$('#frameGroup').on('mouseover', rotate);
+
+}
+
+function trapRotation(e){
+	isRotating = true;
+}
+
+function ceaseRotation(e){
+	isRotating = false;
+}
+
+function rotate(e){
+	if(!isRotating) return;
+
+	console.log(e);
 }
 
 $(document).ready(onLoad);
