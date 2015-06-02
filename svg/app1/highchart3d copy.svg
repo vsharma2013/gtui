@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="font-family:'Unica One', sans-serif;font-size:12px;" width="800" height="400">
+	<desc>Created with Highcharts 4.1.5</desc>
+	<defs>
+		<linearGradient x1="0" y1="0" x2="1" y2="1" id="highcharts-1">
+			<stop offset="0" stop-color="#2a2a2b" stop-opacity="1"/>
+			<stop offset="1" stop-color="#3e3e40" stop-opacity="1"/>
+		</linearGradient>
+		<clipPath id="highcharts-2"><rect x="-75" y="-75" width="950" height="550"/></clipPath>
+	</defs>
+	<rect x="0" y="0" width="800" height="400" strokeWidth="0" fill="url(http://www.highcharts.com/demo/3d-column-interactive/dark-unica#highcharts-1)" class=" highcharts-background"/>
+	<g xmlns="http://www.w3.org/2000/svg" class="highcharts-series-group" zIndex="3">
+		<g xmlns="http://www.w3.org/2000/svg" class="highcharts-series highcharts-tracker" visibility="visible" zIndex="10" transform="translate(75,75) scale(1 1)" style="" clip-path="url(http://www.highcharts.com/demo/3d-column-interactive/dark-unica#highcharts-2)">
+			<g xmlns="http://www.w3.org/2000/svg" zIndex="-28.568012932994097" stroke="#2b908f" stroke-width="1" r="0">
+				<path fill="rgba(68,169,168,1)" d="M 336.0858654633065 149.6043850681496 L 353.6762421124939 136.84124247410972 L 335.1609867084609 123.83592566378614 L 317.5683953412209 136.3360312316504 Z" zIndex="-1.4246212024587503" stroke-linejoin="round"/>
+				<path fill="#2b908f" d="M 318.09975287144505 224.90013783343397 L 335.2854933838589 238.07491898499143 L 336.0858654633065 149.6043850681496 L 317.5683953412209 136.3360312316504 Z" zIndex="40.40863991822648" stroke-linejoin="round"/>
+				<path fill="rgba(18,119,118,1)" d="M 336.0858654633065 149.6043850681496 L 335.2854933838589 238.07491898499143 L 351.6251368044001 225.40214909017354 L 353.6762421124939 136.84124247410972 Z" zIndex="40.15863991822648" stroke-linejoin="round"/>
+			</g>
+		</g>
+		<g class="highcharts-markers" visibility="visible" zIndex="10" transform="translate(75,75) scale(1 1)" clip-path="none"/>
+	</g>
+</svg>
