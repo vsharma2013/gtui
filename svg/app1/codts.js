@@ -87,14 +87,7 @@ function addBarInFrame(f){
 	var $g = $('<g stroke="#2b908f"></g>');
 	$g.attr('transform', sTrans);
 	
-	var path = new Path();
-	path.moveTo(0,0);
-	path.lineTo(0,80);
-	path.lineTo(20,80);
-	path.lineTo(20,0);
-	path.lineTo(20, 50);
-	path.lineTo(50, 50);
-	path.lineTo(50, 0);
+	var path = getPathForFrame(f)
 
 	var $p = $('<path stroke-linejoin="round"></path');
 	$p.attr({
@@ -106,6 +99,35 @@ function addBarInFrame(f){
 	$p.appendTo($g);
 	$g.appendTo($('#frameGroup'));
 
+}
+
+function getPathForFrame(f){
+	var path = new Path();
+	var x = 0;
+	var y = 0;
+	var xMax = f.width;
+	var yMax = f.height;
+	var xIntervals = [10, 20, 30];
+
+	path.moveTo(x, y);
+	while(x <= xMax){
+		y = getRandomIntFromInterval(y, yMax);
+		path.lineTo(x, y);
+		x += getRandomItemFromArray(xIntervals);
+
+		path.lineTo(x, y);
+		y=0;
+		path.lineTo(x,y);
+	}
+	return path;
+}
+
+function getRandomItemFromArray(arr){
+	return arr[this.getRandomIntFromInterval(0,arr.length-1)];
+}
+
+function getRandomIntFromInterval(min, max){
+	return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 
