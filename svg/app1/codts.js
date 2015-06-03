@@ -89,7 +89,7 @@ function addBarInFrame(f){
 	var $g = $('<g stroke="#2b908f"></g>');
 	$g.attr('transform', sTrans);
 	
-	var path = getPathForFrame(f)
+	var path = getRandomPathForFrame(0, 0, f.width, f.height);
 
 	var $p = $('<path stroke-linejoin="round"></path');
 	$p.attr({
@@ -102,28 +102,6 @@ function addBarInFrame(f){
 	$g.appendTo($('#frameGroup'));
 
 }
-
-function getPathForFrame(f){
-	var path = new Path();
-	var x = 0;
-	var y = 0;
-	var xMax = f.width;
-	var yMax = f.height;
-	var xIntervals = [10, 20, 30];
-
-	path.moveTo(x, y);
-	while(x <= xMax){
-		y = getRandomIntFromInterval(y, yMax);
-		path.lineTo(x, y);
-		x += getRandomItemFromArray(xIntervals);
-
-		path.lineTo(x, y);
-		y=0;
-		path.lineTo(x,y);
-	}
-	return path;
-}
-
 
 var isRotating = false;
 

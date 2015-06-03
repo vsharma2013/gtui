@@ -43,3 +43,24 @@ Path.prototype.toString = function(){
 	path += ' Z';
 	return path;
 }
+
+function getRandomPathForFrame(xStart, yStart, fWidth, fHeight){
+	var path = new Path();
+	var x = xStart;
+	var y = yStart;
+	var xMax = fWidth;
+	var yMax = fHeight;
+	var xIntervals = [10, 20, 30];
+
+	path.moveTo(x, y);
+	while(x <= xMax){
+		y = getRandomIntFromInterval(y, yMax);
+		path.lineTo(x, y);
+		x += getRandomItemFromArray(xIntervals);
+
+		path.lineTo(x, y);
+		y=yStart;
+		path.lineTo(x,y);
+	}
+	return path;
+}
