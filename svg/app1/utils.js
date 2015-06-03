@@ -1,3 +1,7 @@
+var blackStroke = "fill: none; stroke: black; stroke-width : 0";
+var blackStrokeLine = "stroke: black;";
+var fillBar = 'rgba(68,169,168,1)';
+
 function getRandomItemFromArray(arr){
 	return arr[this.getRandomIntFromInterval(0,arr.length-1)];
 }
@@ -81,4 +85,8 @@ function getRandomPathForFrame(xStart, yStart, fWidth, fHeight){
 		path.lineTo(x,y);
 	}
 	return path;
+}
+
+function refreshView(){
+	$("body").html($("body").html());
 }

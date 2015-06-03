@@ -34,9 +34,6 @@ function onLoad(){
 	addMouseEventHandlers();
 }
 
-function refreshView(){
-	$("body").html($("body").html());
-}
 
 function addCircle($svg){
 	var $g = $('<g>');
