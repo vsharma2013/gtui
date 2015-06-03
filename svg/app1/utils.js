@@ -44,6 +44,24 @@ Path.prototype.toString = function(){
 	return path;
 }
 
+function getFrames(count, width, height, offset){
+	var x1 = W/6;
+	var y1 = H - height - 30*5;
+	var sin60 = Math.sin(Math.PI/3);
+	var cos60 = Math.cos(Math.PI/6);
+	var frames = [];
+
+	for(var i = 0 ; i < count ; i++){
+		frames.push({
+			x : x1 + i * offset * sin60,
+			y : y1 - (i * offset * cos60),
+			height : height,
+			width : width
+		});
+	}
+	return frames;
+}
+
 function getRandomPathForFrame(xStart, yStart, fWidth, fHeight){
 	var path = new Path();
 	var x = xStart;

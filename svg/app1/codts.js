@@ -27,7 +27,7 @@ function onLoad(){
 	$svg.appendTo($('body'));
 	refreshView();
 
-	var frames = getFrames();
+	var frames = getFrames(5, 300, 200, 30);
 	addBarCharts(frames);
 	refreshView();
 
@@ -51,27 +51,6 @@ function addCircle($svg){
 	$g.appendTo($svg);
 }
 
-function getFrames(){
-	var lambda = 30;
-	var wRect = 300;
-	var hRect = 200;
-
-	var x1 = W/6;
-	var y1 = H - hRect - 30*5;
-	var sin60 = Math.sin(Math.PI/3);
-	var cos60 = Math.cos(Math.PI/6);
-	var frames = [];
-
-	for(var i = 0 ; i < 5 ; i++){
-		frames.push({
-			x : x1 + i * lambda * sin60,
-			y : y1 - (i * lambda * cos60),
-			height : hRect,
-			width : wRect
-		});
-	}
-	return frames;
-}
 
 function addBarCharts(frames){
 	$.each(frames, function(idx, f){
