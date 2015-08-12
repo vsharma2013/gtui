@@ -1,9 +1,11 @@
+var data = require('./../data/data');
+
 function ApiController(){
 
 }
 
-ApiController.prototype.handleDefaultRequest = function(req, res){
-	res.json({success: true, message : 'Hello from ng-controller'});
+ApiController.prototype.getPhones = function(req, res){
+	res.json(data.phones);
 }
 
 var gApiController = new ApiController();

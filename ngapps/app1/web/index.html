@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="phonecatApp">
 <head>
 	<title>Angular App</title>
+	<link rel="stylesheet" type="text/css" href="libs/angularjs/angular-csp.css">
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-	
+	<div ng-view>		
+	</div>	
 </body>	
+	<script type="text/javascript" src="libs/angularjs/angular.min.js"></script>
+	<script type="text/javascript" src="libs/angularjs/angular-route.min.js"></script>
+	<script type="text/javascript" src="src/controllers/controllers.js"></script>
 	<script type="text/javascript" src="index.js"></script>
 </html>
