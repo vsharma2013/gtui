@@ -3,20 +3,18 @@ var phonecatControllers = angular.module('phonecatControllers', []);
 phonecatControllers.controller('PhoneListCtrl', PhoneListCtrl);
 phonecatControllers.controller('PhoneDetailCtrl', PhoneDetailCtrl);
 
-function PhoneListCtrl($scope, $http){
-	$http.get('/api/phones').success(function(phones){
-		$scope.phones = phones; 
-	});
+function PhoneListCtrl($scope, Phone){
+	$scope.phones = Phone.query();
  	$scope.orderProp = 'name';
 }
 
-PhoneListCtrl.$inject =['$scope', '$http'];
+PhoneListCtrl.$inject =['$scope', 'Phone'];
 
 
-function PhoneDetailCtrl($scope, $routeParams, $http){
-	$http.get('/api/phones/' + $routeParams.phonesId).success(function(data){
-		$scope.phone = data;
+function PhoneDetailCtrl($scope, $routeParams, Phone){
+	$scope.phone = Phone.get({phoneId: $routeParams.phonesId}, function(phone) {
+	    $scope.mainImageUrl = phone.images[0];
 	});
 }
 
-PhoneDetailCtrl.$inject = ['$scope', '$routeParams', '$http'];
+PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
