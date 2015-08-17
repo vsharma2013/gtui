@@ -1,7 +1,7 @@
 var phoneService = angular.module('PhoneService', ['ngResource']);
 
 function Phone($resource){
-	console.log('Phone service created');
+	console.log(this);
 	var qObj = {
 		query : {
 			method : 'GET',
@@ -17,3 +17,7 @@ function Phone($resource){
 Phone.$inject = ['$resource'];
 
 phoneService.factory('Phone', Phone);
+
+phoneService.service('myEmptyService', function() {
+  console.log(this);
+});
