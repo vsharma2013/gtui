@@ -1,23 +1,24 @@
-var phoneService = angular.module('PhoneService', ['ngResource']);
+(function(){
+	angular
+		.module('PhoneService', ['ngResource'])
+		.factory('Phone', Phone)
+		.service('myEmptyService', myEmptyService);
 
-function Phone($resource){
-	console.log(this);
-	var qObj = {
-		query : {
-			method : 'GET',
-			params : {
-				phoneId : 'phones'				
-			},
-			isArray : true
-		}
-	};
-	return $resource('/api/phones/:phoneId', {}, qObj);
-}
+	Phone.$inject = ['$resource'];
 
-Phone.$inject = ['$resource'];
+	function Phone($resource){
+		var qObj = {
+			query : {
+				method : 'GET',
+				params : {
+					phoneId : 'phones'				
+				},
+				isArray : true
+			}
+		};
+		return $resource('/api/phones/:phoneId', {}, qObj);
+	}	
 
-phoneService.factory('Phone', Phone);
-
-phoneService.service('myEmptyService', function() {
-  console.log(this);
-});
+	function myEmptyService(){
+	}
+})();
